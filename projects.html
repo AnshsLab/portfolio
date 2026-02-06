@@ -8,18 +8,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
-
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #f7f7f5;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
             font-family: 'Lato', sans-serif;
-            color: #111;
+            color: #fff;
         }
-
+        
         #canvas-container {
             position: fixed;
             top: 0;
@@ -27,8 +33,13 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+            cursor: grab;
         }
 
+        #canvas-container:active {
+            cursor: grabbing;
+        }
+        
         #ui-layer {
             position: fixed;
             top: 0;
@@ -38,133 +49,267 @@
             z-index: 2;
             pointer-events: none;
         }
-
+        
         .logo {
             position: fixed;
-            top: 40px;
-            left: 50px;
+            top: clamp(20px, 4vw, 40px);
+            left: clamp(20px, 5vw, 50px);
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             letter-spacing: 2px;
-            font-size: 1rem;
+            font-size: clamp(0.8rem, 2vw, 1rem);
             text-transform: uppercase;
             z-index: 10;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
-
-        /* Back Home Button */
+        
         .back-home {
             position: fixed;
-            top: 40px;
-            right: 50px;
-            color: #111;
-            font-size: 1.5rem;
+            top: clamp(20px, 4vw, 40px);
+            right: clamp(20px, 5vw, 50px);
+            color: #fff;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
             z-index: 10;
             pointer-events: all;
             cursor: pointer;
             transition: transform 0.2s ease, color 0.2s ease;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
-
+        
         .back-home:hover {
-            transform: scale(1.1);
-            color: #666;
+            transform: scale(1.15) rotate(90deg);
+            color: #aaa;
         }
-
+        
         .slide-content {
             position: absolute;
-            top: 25%;
-            left: 8%;
-            width: 30%;
-            max-width: 450px;
+            top: clamp(15%, 20vw, 25%);
+            left: clamp(5%, 6vw, 8%);
+            width: clamp(250px, 35%, 450px);
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.8s ease, transform 0.8s ease-out;
-            pointer-events: auto; 
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            padding: clamp(1rem, 3vw, 2rem);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
+        
         .slide-content.active {
             opacity: 1;
             transform: translateY(0);
         }
-
+        
         h1 {
             font-family: 'Playfair Display', serif;
             font-weight: 400;
             font-style: italic;
-            font-size: 4rem;
-            margin: 0 0 1.5rem 0;
+            font-size: clamp(2rem, 6vw, 4rem);
+            margin: 0 0 1rem 0;
             line-height: 1;
-            color: #0d0d0d;
+            color: #fff;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
         }
-
+        
         .catalogue-number {
-            font-size: 0.7rem;
+            font-size: clamp(0.6rem, 1.5vw, 0.7rem);
             text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #999;
-            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            color: #bbb;
+            margin-bottom: 1rem;
             display: inline-block;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
             padding-bottom: 5px;
         }
-
+        
         .description {
-            font-size: 1.05rem;
+            font-size: clamp(0.85rem, 2vw, 1.05rem);
             font-weight: 300;
-            line-height: 1.8;
-            color: #444;
-            margin-bottom: 3rem;
+            line-height: 1.7;
+            color: #ddd;
+            margin-bottom: clamp(1.5rem, 4vw, 3rem);
             text-align: justify;
         }
-
+        
         .meta-grid {
             display: grid;
-            grid-template-columns: 80px 1fr;
-            row-gap: 0.8rem;
-            border-top: 1px solid #e0e0e0;
-            padding-top: 1.5rem;
+            grid-template-columns: clamp(60px, 15vw, 80px) 1fr;
+            row-gap: 0.6rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 1rem;
         }
-
+        
         .meta-label {
-            font-size: 0.65rem;
+            font-size: clamp(0.6rem, 1.2vw, 0.65rem);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #888;
+            color: #999;
             align-self: center;
         }
-
+        
         .meta-value {
             font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
             font-style: italic;
-            color: #222;
+            color: #fff;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.7rem 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            text-decoration: none;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            transition: all 0.3s ease;
+        }
+
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .github-link i {
+            font-size: 1.2em;
         }
         
         .scroll-hint {
             position: fixed;
-            bottom: 40px;
-            left: 50px;
-            font-size: 0.7rem;
+            bottom: clamp(20px, 4vw, 40px);
+            left: clamp(20px, 5vw, 50px);
+            font-size: clamp(0.6rem, 1.5vw, 0.7rem);
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #aaa;
+            color: #888;
+            z-index: 10;
+        }
+
+        .click-hint {
+            position: fixed;
+            bottom: clamp(20px, 4vw, 40px);
+            right: clamp(20px, 5vw, 50px);
+            font-size: clamp(0.6rem, 1.5vw, 0.7rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            z-index: 10;
+            text-align: right;
+        }
+
+        .click-hint i {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.2em;
+        }
+        
+        /* Mobile Portrait */
+        @media (max-width: 768px) and (orientation: portrait) {
+            .slide-content {
+                top: auto;
+                bottom: 10%;
+                left: 5%;
+                right: 5%;
+                width: auto;
+                max-height: 50vh;
+                overflow-y: auto;
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .description {
+                margin-bottom: 1.5rem;
+            }
+            
+            .logo {
+                font-size: 0.75rem;
+            }
+
+            .click-hint {
+                display: none;
+            }
+        }
+        
+        /* Mobile Landscape */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            .slide-content {
+                top: 10%;
+                left: 5%;
+                width: 40%;
+                max-height: 75vh;
+                overflow-y: auto;
+                padding: 1.2rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .description {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        /* Tablet */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .slide-content {
+                width: 45%;
+                padding: 1.8rem;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        /* Very small phones */
+        @media (max-width: 480px) {
+            .slide-content {
+                bottom: 5%;
+                left: 3%;
+                right: 3%;
+                padding: 1.2rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .meta-grid {
+                grid-template-columns: 60px 1fr;
+                row-gap: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Page Transition Overlay -->
     <div class="page-transition-overlay" style="opacity: 1;"></div>
-
+    
     <div class="logo">MY PROJECTS</div>
     
     <!-- Back to Home Button -->
     <a href="index.html" class="back-home" id="backHome">
         <i class="fas fa-times"></i>
     </a>
-
+    
     <div id="canvas-container"></div>
-
+    
     <div id="ui-layer">
-        
+        <!-- Project 1 -->
         <div class="slide-content" id="slide-0">
             <span class="catalogue-number">01 / Portfolio</span>
             <h1>Project <br>Alpha</h1>
@@ -176,8 +321,13 @@
                 <span class="meta-label">Year</span> <span class="meta-value">2024</span>
                 <span class="meta-label">Status</span> <span class="meta-value">Live</span>
             </div>
+            <a href="https://github.com/yourusername/project-alpha" target="_blank" class="github-link">
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>
         </div>
-
+        
+        <!-- Project 2 -->
         <div class="slide-content" id="slide-1">
             <span class="catalogue-number">02 / Portfolio</span>
             <h1>Design <br>System</h1>
@@ -189,8 +339,13 @@
                 <span class="meta-label">Year</span> <span class="meta-value">2024</span>
                 <span class="meta-label">Status</span> <span class="meta-value">In Progress</span>
             </div>
+            <a href="https://github.com/yourusername/design-system" target="_blank" class="github-link">
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>
         </div>
-
+        
+        <!-- Project 3 -->
         <div class="slide-content" id="slide-2">
             <span class="catalogue-number">03 / Portfolio</span>
             <h1>Mobile <br>App</h1>
@@ -202,8 +357,13 @@
                 <span class="meta-label">Year</span> <span class="meta-value">2023</span>
                 <span class="meta-label">Status</span> <span class="meta-value">Completed</span>
             </div>
+            <a href="https://github.com/yourusername/mobile-app" target="_blank" class="github-link">
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>
         </div>
-
+        
+        <!-- Project 4 -->
         <div class="slide-content" id="slide-3">
             <span class="catalogue-number">04 / Portfolio</span>
             <h1>API <br>Gateway</h1>
@@ -215,16 +375,106 @@
                 <span class="meta-label">Year</span> <span class="meta-value">2023</span>
                 <span class="meta-label">Status</span> <span class="meta-value">Maintained</span>
             </div>
+            <a href="https://github.com/yourusername/api-gateway" target="_blank" class="github-link">
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>
         </div>
 
+        <!-- Project 5 - COMMENTED OUT - ADD MORE PROJECTS BY UNCOMMENTING AND EDITING -->
+        <!--
+        <div class="slide-content" id="slide-4">
+            <span class="catalogue-number">05 / Portfolio</span>
+            <h1>Your <br>Project</h1>
+            <div class="description">
+                Description of your project goes here. Explain what it does, the technologies used, and any interesting challenges you solved.
+            </div>
+            <div class="meta-grid">
+                <span class="meta-label">Tech</span> <span class="meta-value">Your Tech Stack</span>
+                <span class="meta-label">Year</span> <span class="meta-value">2024</span>
+                <span class="meta-label">Status</span> <span class="meta-value">Status Here</span>
+            </div>
+            <a href="https://github.com/yourusername/your-project" target="_blank" class="github-link">
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>
+        </div>
+        -->
+
+        <!-- Project 6 - TEMPLATE -->
+        <!--
+        <div class="slide-content" id="slide-5">
+            <span class="catalogue-number">06 / Portfolio</span>
+            <h1>Another <br>Project</h1>
+            <div class="description">
+                Another project description here.
+            </div>
+            <div class="meta-grid">
+                <span class="meta-label">Tech</span> <span class="meta-value">Tech Stack</span>
+                <span class="meta-label">Year</span> <span class="meta-value">Year</span>
+                <span class="meta-label">Status</span> <span class="meta-value">Status</span>
+            </div>
+            <a href="https://github.com/yourusername/project-name" target="_blank" class="github-link">
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>
+        </div>
+        -->
     </div>
     
-    <div class="scroll-hint">Scroll to explore projects</div>
-
+    <div class="scroll-hint">Scroll to explore</div>
+    <div class="click-hint">
+        <i class="fas fa-mouse-pointer"></i>
+        Click image to visit repo
+    </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
+    
     <script>
+        // ============================================
+        // PROJECT CONFIGURATION
+        // ============================================
+        // TO ADD MORE PROJECTS:
+        // 1. Add project info to the PROJECTS array below
+        // 2. Uncomment a slide-content div above and update its info
+        // 3. Update slideCount below to match total number of projects
+        // ============================================
+        
+        const PROJECTS = [
+            {
+                id: 0,
+                title: 'Project Alpha',
+                image: 'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?w=800&q=80',
+                githubUrl: 'https://github.com/yourusername/project-alpha'
+            },
+            {
+                id: 1,
+                title: 'Design System',
+                image: 'https://images.unsplash.com/photo-1582201942988-13e60e4556ee?w=800&q=80',
+                githubUrl: 'https://github.com/yourusername/design-system'
+            },
+            {
+                id: 2,
+                title: 'Mobile App',
+                image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80',
+                githubUrl: 'https://github.com/yourusername/mobile-app'
+            },
+            {
+                id: 3,
+                title: 'API Gateway',
+                image: 'https://images.unsplash.com/photo-1577720580479-7d839d829c73?w=800&q=80',
+                githubUrl: 'https://github.com/yourusername/api-gateway'
+            }
+            // ADD MORE PROJECTS HERE:
+            // {
+            //     id: 4,
+            //     title: 'Your Project Name',
+            //     image: 'YOUR_IMAGE_URL_HERE',
+            //     githubUrl: 'https://github.com/yourusername/your-repo'
+            // }
+        ];
+
         // Page transition on load
         window.addEventListener('DOMContentLoaded', () => {
             const overlay = document.querySelector('.page-transition-overlay');
@@ -237,7 +487,7 @@
                     }, 500);
                 }, 100);
             }
-
+            
             // Back to home with transition
             const backHome = document.getElementById('backHome');
             if (backHome) {
@@ -252,104 +502,207 @@
                 });
             }
         });
-
-        // Three.js Gallery Code
-        const CONFIG = {
-            slideCount: 4,
-            spacingX: 45,
-            pWidth: 14,
-            pHeight: 18,
-            camZ: 30,
-            wallAngleY: -0.25,
-            snapDelay: 200,
-            lerpSpeed: 0.06
-        };
-
-        const totalGalleryWidth = CONFIG.slideCount * CONFIG.spacingX;
-
+        
+        // Responsive configuration
+        function getResponsiveConfig() {
+            const width = window.innerWidth;
+            
+            if (width < 480) {
+                return {
+                    slideCount: PROJECTS.length,
+                    spacingX: 30,
+                    pWidth: 10,
+                    pHeight: 14,
+                    camZ: 25,
+                    wallAngleY: -0.15,
+                    snapDelay: 200,
+                    lerpSpeed: 0.08
+                };
+            } else if (width < 768) {
+                return {
+                    slideCount: PROJECTS.length,
+                    spacingX: 35,
+                    pWidth: 12,
+                    pHeight: 16,
+                    camZ: 28,
+                    wallAngleY: -0.2,
+                    snapDelay: 200,
+                    lerpSpeed: 0.07
+                };
+            } else if (width < 1024) {
+                return {
+                    slideCount: PROJECTS.length,
+                    spacingX: 40,
+                    pWidth: 13,
+                    pHeight: 17,
+                    camZ: 29,
+                    wallAngleY: -0.22,
+                    snapDelay: 200,
+                    lerpSpeed: 0.065
+                };
+            } else {
+                return {
+                    slideCount: PROJECTS.length,
+                    spacingX: 45,
+                    pWidth: 14,
+                    pHeight: 18,
+                    camZ: 30,
+                    wallAngleY: -0.25,
+                    snapDelay: 200,
+                    lerpSpeed: 0.06
+                };
+            }
+        }
+        
+        let CONFIG = getResponsiveConfig();
+        let totalGalleryWidth = CONFIG.slideCount * CONFIG.spacingX;
+        
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xf7f7f5);
-        scene.fog = new THREE.Fog(0xf7f7f5, 10, 110); 
-
+        scene.background = new THREE.Color(0x1a1a1a);
+        scene.fog = new THREE.Fog(0x1a1a1a, 15, 100);
+        
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 0, CONFIG.camZ);
-
+        
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-        const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+        
+        // Enhanced lighting
+        const ambient = new THREE.AmbientLight(0xffffff, 0.3);
         scene.add(ambient);
-
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
-        dirLight.position.set(10, 20, 10);
-        scene.add(dirLight);
-
+        
+        const spotLight = new THREE.SpotLight(0xffffff, 1.5);
+        spotLight.position.set(0, 15, 20);
+        spotLight.angle = Math.PI / 6;
+        spotLight.penumbra = 0.3;
+        spotLight.decay = 2;
+        spotLight.distance = 100;
+        spotLight.castShadow = true;
+        scene.add(spotLight);
+        
+        const rimLight = new THREE.DirectionalLight(0x6699ff, 0.4);
+        rimLight.position.set(-10, 5, -10);
+        scene.add(rimLight);
+        
+        const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
+        fillLight.position.set(10, 5, 10);
+        scene.add(fillLight);
+        
         const galleryGroup = new THREE.Group();
         scene.add(galleryGroup);
-
+        
         const textureLoader = new THREE.TextureLoader();
         const planeGeo = new THREE.PlaneGeometry(CONFIG.pWidth, CONFIG.pHeight);
-
-        const images = [
-            'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?w=800&q=80',
-            'https://images.unsplash.com/photo-1582201942988-13e60e4556ee?w=800&q=80',
-            'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80',
-            'https://images.unsplash.com/photo-1577720580479-7d839d829c73?w=800&q=80'
-        ];
-
+        
         const paintingGroups = [];
-
-        for(let i=0; i<CONFIG.slideCount; i++) {
+        const raycaster = new THREE.Raycaster();
+        const mouseVector = new THREE.Vector2();
+        
+        // Create paintings from PROJECTS array
+        for(let i = 0; i < PROJECTS.length; i++) {
+            const project = PROJECTS[i];
             const group = new THREE.Group();
             group.position.set(i * CONFIG.spacingX, 0, 0);
-            const mat = new THREE.MeshBasicMaterial({ map: textureLoader.load(images[i]) });
+            group.userData = { projectId: project.id, githubUrl: project.githubUrl };
+            
+            const mat = new THREE.MeshStandardMaterial({ 
+                map: textureLoader.load(project.image),
+                metalness: 0.1,
+                roughness: 0.8
+            });
             const mesh = new THREE.Mesh(planeGeo, mat);
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            mesh.userData = { clickable: true, githubUrl: project.githubUrl };
+            
             const edges = new THREE.EdgesGeometry(planeGeo);
-            const outline = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x222222 }));
-
+            const outline = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xffffff }));
+            
             const shadowGeo = new THREE.PlaneGeometry(CONFIG.pWidth, CONFIG.pHeight);
-            const shadowMat = new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.15 });
+            const shadowMat = new THREE.MeshBasicMaterial({ 
+                color: 0x000000, 
+                transparent: true, 
+                opacity: 0.5 
+            });
             const shadow = new THREE.Mesh(shadowGeo, shadowMat);
-            shadow.position.set(0.8, -0.8, -0.5); 
-
-            const lineZ = -1;
-            const lineLen = CONFIG.spacingX;
-            const lineGeo = new THREE.BufferGeometry().setFromPoints([
-                new THREE.Vector3(-lineLen/2, 14, lineZ), new THREE.Vector3(lineLen/2, 14, lineZ),
-                new THREE.Vector3(-lineLen/2, -14, lineZ), new THREE.Vector3(lineLen/2, -14, lineZ)
-            ]);
-            const lines = new THREE.LineSegments(lineGeo, new THREE.LineBasicMaterial({ color: 0xdddddd }));
-
+            shadow.position.set(1, -1, -0.5);
+            
+            const paintingLight = new THREE.PointLight(0xffffff, 0.8, 30);
+            paintingLight.position.set(0, 0, 8);
+            group.add(paintingLight);
+            
             group.add(shadow);
             group.add(mesh);
             group.add(outline);
-            group.add(lines);
             
             galleryGroup.add(group);
             paintingGroups.push(group);
         }
-
+        
         galleryGroup.rotation.y = CONFIG.wallAngleY;
-        galleryGroup.position.x = 8; 
-
+        galleryGroup.position.x = 8;
+        
+        // Click handler for paintings
+        function onPaintingClick(event) {
+            mouseVector.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseVector.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            raycaster.setFromCamera(mouseVector, camera);
+            
+            let intersects = [];
+            paintingGroups.forEach(group => {
+                const meshes = group.children.filter(child => child.userData.clickable);
+                intersects.push(...raycaster.intersectObjects(meshes));
+            });
+            
+            if (intersects.length > 0) {
+                const clickedObject = intersects[0].object;
+                if (clickedObject.userData.githubUrl) {
+                    window.open(clickedObject.userData.githubUrl, '_blank');
+                }
+            }
+        }
+        
+        // Hover effect
+        function onPaintingHover(event) {
+            mouseVector.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseVector.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            raycaster.setFromCamera(mouseVector, camera);
+            
+            let intersects = [];
+            paintingGroups.forEach(group => {
+                const meshes = group.children.filter(child => child.userData.clickable);
+                intersects.push(...raycaster.intersectObjects(meshes));
+            });
+            
+            document.getElementById('canvas-container').style.cursor = 
+                intersects.length > 0 ? 'pointer' : 'grab';
+        }
+        
+        renderer.domElement.addEventListener('click', onPaintingClick);
+        renderer.domElement.addEventListener('mousemove', onPaintingHover);
+        
         let currentScroll = 0;
         let targetScroll = 0;
         let snapTimer = null;
         let mouse = { x: 0, y: 0 };
-
+        
         function snapToNearest() {
             const index = Math.round(targetScroll / CONFIG.spacingX);
             targetScroll = index * CONFIG.spacingX;
         }
-
+        
         window.addEventListener('wheel', (e) => {
-            targetScroll += e.deltaY * 0.1;            
+            targetScroll += e.deltaY * 0.1;
             if(snapTimer) clearTimeout(snapTimer);
             snapTimer = setTimeout(snapToNearest, CONFIG.snapDelay);
         });
-
+        
         let touchStart = 0;
         window.addEventListener('touchstart', e => {
             touchStart = e.touches[0].clientX;
@@ -362,20 +715,20 @@
             touchStart = e.touches[0].clientX;
             if(snapTimer) clearTimeout(snapTimer);
         });
-
+        
         window.addEventListener('touchend', () => {
             snapToNearest();
         });
-
+        
         window.addEventListener('mousemove', (e) => {
             mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
         });
-
+        
         function updateUI(scrollX) {
-            const rawIndex = Math.round(scrollX / CONFIG.spacingX);            
-            const safeIndex = ((rawIndex % CONFIG.slideCount) + CONFIG.slideCount) % CONFIG.slideCount;     
-            for(let i=0; i<CONFIG.slideCount; i++) {
+            const rawIndex = Math.round(scrollX / CONFIG.spacingX);
+            const safeIndex = ((rawIndex % CONFIG.slideCount) + CONFIG.slideCount) % CONFIG.slideCount;
+            for(let i = 0; i < CONFIG.slideCount; i++) {
                 const el = document.getElementById(`slide-${i}`);
                 if(el) {
                     if(i === safeIndex) el.classList.add('active');
@@ -383,7 +736,7 @@
                 }
             }
         }
-
+        
         function animate() {
             requestAnimationFrame(animate);
             currentScroll += (targetScroll - currentScroll) * CONFIG.lerpSpeed;
@@ -391,24 +744,37 @@
             const zMove = currentScroll * Math.sin(CONFIG.wallAngleY);
             camera.position.x = xMove;
             camera.position.z = CONFIG.camZ - zMove;
+            
+            spotLight.position.x = xMove;
+            
             paintingGroups.forEach((group, i) => {
                 const originalX = i * CONFIG.spacingX;
                 const distFromCam = currentScroll - originalX;
                 const shift = Math.round(distFromCam / totalGalleryWidth) * totalGalleryWidth;
                 group.position.x = originalX + shift;
             });
-            camera.rotation.x = mouse.y * 0.05; 
+            
+            camera.rotation.x = mouse.y * 0.05;
             camera.rotation.y = -mouse.x * 0.05;
             updateUI(currentScroll);
             renderer.render(scene, camera);
         }
-
+        
         window.addEventListener('resize', () => {
+            CONFIG = getResponsiveConfig();
+            totalGalleryWidth = CONFIG.slideCount * CONFIG.spacingX;
+            
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
+            camera.position.z = CONFIG.camZ;
             renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            galleryGroup.rotation.y = CONFIG.wallAngleY;
+            paintingGroups.forEach((group, i) => {
+                group.position.x = i * CONFIG.spacingX;
+            });
         });
-
+        
         animate();
     </script>
 </body>
