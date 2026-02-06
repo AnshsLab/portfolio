@@ -1,11 +1,9 @@
 const ROWS = 6;
 const COLS = 6;
-const COOLDOWN = 1000;
 
 let isFlipped = false;
 let tiles = [];
 
-// Responsive block size
 function getBlockSize() {
   return window.innerWidth < 768 ? 30 : 50;
 }
@@ -116,7 +114,6 @@ function initializeTileAnimations() {
   });
 
   const flipButton = document.getElementById("flipButton");
-  flipButton.setAttribute("aria-label", "Flip all tiles");
   flipButton.addEventListener("click", () => flipAllTiles());
 }
 
@@ -266,27 +263,56 @@ function initFooter() {
   });
 }
 
-// Expand item function
-function expandItem(section) {
-  // Special case: if section is "contact", open footer instead
-  if (section === 'contact') {
-    const footer = document.getElementById('footer');
-    footer.classList.add('active');
-    return;
-  }
+// Page transition overlay
+function createPageTransition() {
+  const overlay = document.createElement('div');
+  overlay.className = 'page-transition-overlay';
+  document.body.appendChild(overlay);
+  return overlay;
+}
 
-  // You can add more click handlers for other items here
-  // Example for future navigation:
-  /*
-  const projectsItem = document.querySelector('.column-1 .item-1');
-  if (projectsItem) {
-    projectsItem.addEventListener('click', () => {
-      // Navigate to projects section
-      console.log('Navigate to projects');
+// Smooth page transition function
+function transitionToPage(url) {
+  const overlay = createPageTransition();
+  
+  gsap.to(overlay, {
+    opacity: 1,
+    duration: 0.5,
+    ease: "power2.inOut",
+    onComplete: () => {
+      window.location.href = url;
+    }
+  });
+}
+
+// Page load transition (fade in)
+function pageLoadTransition() {
+  const overlay = document.querySelector('.page-transition-overlay');
+  if (overlay) {
+    gsap.to(overlay, {
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.inOut",
+      onComplete: () => {
+        overlay.remove();
+      }
     });
   }
-  */
 }
+
+// Section to page mapping
+const sectionPages = {
+  'projects': 'projects.html',
+  'opensource': 'opensource.html',
+  'about': 'about.html',
+  'skills': 'skills.html',
+  'experience': 'experience.html',
+  'blog': 'blog.html',
+  'contact': 'contact.html',
+  'resume': 'resume.html',
+  'talk': 'talk.html'
+};
+
 function expandItem(section) {
   // Special case: if section is "contact", open footer instead
   if (section === 'contact') {
@@ -295,18 +321,12 @@ function expandItem(section) {
     return;
   }
 
-  const expandedDiv = document.getElementById(`${section}-expanded`);
-  if (expandedDiv) {
-    const clickedItem = document.querySelector(`[data-section="${section}"]`);
-    const bgImage = window.getComputedStyle(clickedItem).backgroundImage;
-    expandedDiv.style.backgroundImage = bgImage;
-    
-    expandedDiv.classList.add('active');
-    document.body.style.overflow = 'hidden';
+  // Navigate to the corresponding page with transition
+  if (sectionPages[section]) {
+    transitionToPage(sectionPages[section]);
   }
 }
 
-// Close expanded item - make it global
 window.closeExpanded = function() {
   const expandedItems = document.querySelectorAll('.item-expanded.active');
   expandedItems.forEach(item => {
@@ -315,7 +335,6 @@ window.closeExpanded = function() {
   document.body.style.overflow = '';
 }
 
-// Add click handlers for navigation items
 function initNavigationItems() {
   const items = document.querySelectorAll('.container .item[data-section]');
   
@@ -326,7 +345,6 @@ function initNavigationItems() {
     });
   });
   
-  // Close on escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeExpanded();
@@ -335,6 +353,10 @@ function initNavigationItems() {
 }
 
 function init() {
+  // Create initial transition overlay
+  const overlay = createPageTransition();
+  overlay.style.opacity = '1';
+  
   const img = new Image();
   img.src = './assets/back.jpg';
   
@@ -352,6 +374,11 @@ function init() {
   
   initFooter();
   initNavigationItems();
+  
+  // Fade in page after everything loads
+  setTimeout(() => {
+    pageLoadTransition();
+  }, 100);
 }
 
 document.addEventListener("DOMContentLoaded", init);
