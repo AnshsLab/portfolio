@@ -1,6 +1,5 @@
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
-
 // Initialize Lenis smooth scroll
 const lenis = new Lenis({
     duration: 1.2,
@@ -8,17 +7,13 @@ const lenis = new Lenis({
     smooth: true,
     smoothTouch: false
 });
-
 function raf(time) {
     lenis.raf(time);
     requestAnimationFrame(raf);
 }
-
 requestAnimationFrame(raf);
-
 // Connect Lenis with ScrollTrigger
 lenis.on('scroll', ScrollTrigger.update);
-
 // Wait for DOM to load
 window.addEventListener('DOMContentLoaded', () => {
     
@@ -43,7 +38,6 @@ window.addEventListener('DOMContentLoaded', () => {
                     start: `bottom+=${gap}px bottom`,
                     end: `bottom+=${viewportHeight - gap}px bottom`,
                     scrub: true,
-                    // markers: true // Uncomment to debug
                 }
             });
         }
@@ -59,22 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }, 500);
         }, 100);
     }
-    
-    // Back to Home Button
-    const backHome = document.getElementById('backHome');
-    if (backHome) {
-        backHome.addEventListener('click', (e) => {
-            e.preventDefault();
-            const overlay = document.querySelector('.page-transition-overlay');
-            overlay.style.display = 'block';
-            overlay.style.opacity = '1';
-            setTimeout(() => {
-                window.location.href = 'index.html#grid';
-            }, 500);
-        });
-    }
 });
-
 // Refresh ScrollTrigger on resize
 window.addEventListener('resize', () => {
     ScrollTrigger.refresh();

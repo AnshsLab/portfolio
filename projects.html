@@ -219,6 +219,16 @@
             background: rgba(255, 255, 255, 0.2);
             border-color: rgba(255, 255, 255, 0.4);
         }
+
+        .projects-nav a.home-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .projects-nav a.home-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
         
         .scroll-hint {
             position: fixed;
@@ -400,19 +410,19 @@
     
     <!-- Navigation Bar -->
     <nav class="projects-nav">
-        <a href="projects.html" class="active">Projects</a>
-        <a href="opensource.html">Open Source</a>
-        <a href="about.html">About</a>
-        <a href="skills.html">Skills</a>
-        <a href="experience.html">Experience</a>
-        <a href="blog.html">Blog</a>
-        <a href="contact.html">Contact</a>
-        <a href="resume.html">Resume</a>
-        <a href="talk.html">The Lab</a>
-    </nav>
-    
+    <a href="index.html#grid" class="home-btn"><i class="fas fa-home"></i> Home</a>
+    <a href="projects.html" class="active">Projects</a>
+    <a href="opensource.html">Open Source</a>
+    <a href="about.html">About</a>
+    <a href="skills.html">Skills</a>
+    <a href="experience.html">Experience</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+    <a href="resume.html">Resume</a>
+    <a href="lab.html">The Lab</a>  <!-- Added this line -->
+</nav>
     <!-- Back to Home Button -->
-    <a href="index.html" class="back-home" id="backHome">
+    <a href="index.html#grid" class="back-home" id="backHome">
         <i class="fas fa-times"></i>
     </a>
     
@@ -490,44 +500,6 @@
                 View on GitHub
             </a>
         </div>
-        <!-- Project 5 - COMMENTED OUT - ADD MORE PROJECTS BY UNCOMMENTING AND EDITING -->
-        <!--
-        <div class="slide-content" id="slide-4">
-            <span class="catalogue-number">05 / Portfolio</span>
-            <h1>Your <br>Project</h1>
-            <div class="description">
-                Description of your project goes here. Explain what it does, the technologies used, and any interesting challenges you solved.
-            </div>
-            <div class="meta-grid">
-                <span class="meta-label">Tech</span> <span class="meta-value">Your Tech Stack</span>
-                <span class="meta-label">Year</span> <span class="meta-value">2024</span>
-                <span class="meta-label">Status</span> <span class="meta-value">Status Here</span>
-            </div>
-            <a href="https://github.com/yourusername/your-project" target="_blank" class="github-link">
-                <i class="fab fa-github"></i>
-                View on GitHub
-            </a>
-        </div>
-        -->
-        <!-- Project 6 - TEMPLATE -->
-        <!--
-        <div class="slide-content" id="slide-5">
-            <span class="catalogue-number">06 / Portfolio</span>
-            <h1>Another <br>Project</h1>
-            <div class="description">
-                Another project description here.
-            </div>
-            <div class="meta-grid">
-                <span class="meta-label">Tech</span> <span class="meta-value">Tech Stack</span>
-                <span class="meta-label">Year</span> <span class="meta-value">Year</span>
-                <span class="meta-label">Status</span> <span class="meta-value">Status</span>
-            </div>
-            <a href="https://github.com/yourusername/project-name" target="_blank" class="github-link">
-                <i class="fab fa-github"></i>
-                View on GitHub
-            </a>
-        </div>
-        -->
     </div>
     
     <div class="scroll-hint">Scroll to explore</div>
@@ -542,11 +514,6 @@
     <script>
         // ============================================
         // PROJECT CONFIGURATION
-        // ============================================
-        // TO ADD MORE PROJECTS:
-        // 1. Add project info to the PROJECTS array below
-        // 2. Uncomment a slide-content div above and update its info
-        // 3. Update slideCount below to match total number of projects
         // ============================================
         
         const PROJECTS = [
@@ -574,13 +541,6 @@
                 image: 'https://images.unsplash.com/photo-1577720580479-7d839d829c73?w=800&q=80',
                 githubUrl: 'https://github.com/yourusername/api-gateway'
             }
-            // ADD MORE PROJECTS HERE:
-            // {
-            //     id: 4,
-            //     title: 'Your Project Name',
-            //     image: 'YOUR_IMAGE_URL_HERE',
-            //     githubUrl: 'https://github.com/yourusername/your-repo'
-            // }
         ];
         // Page transition on load
         window.addEventListener('DOMContentLoaded', () => {
@@ -604,7 +564,6 @@
                     overlay.style.pointerEvents = 'all';
                     overlay.style.opacity = '1';
                     setTimeout(() => {
-                        // Navigate to index.html with hash to trigger grid display
                         window.location.href = 'index.html#grid';
                     }, 500);
                 });
