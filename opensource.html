@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Source - Portfolio</title>
+    <link rel="stylesheet" href="opensource.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition-overlay"></div>
+    
+    <!-- Navigation Bar -->
+    <nav class="projects-nav">
+        <a href="index.html#grid" class="home-btn"><i class="fas fa-home"></i> Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="opensource.html" class="active">Open Source</a>
+        <a href="about.html">About</a>
+        <a href="skills.html">Skills</a>
+        <a href="experience.html">Experience</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+        <a href="resume.html">Resume</a>
+        <a href="lab.html">The Lab</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="opensource-container">
+        
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Open Source</h1>
+                <p class="hero-subtitle">Contributing to the community, one commit at a time</p>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h3 class="stat-number">50+</h3>
+                    <p class="stat-label">Contributions</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3 class="stat-number">12</h3>
+                    <p class="stat-label">Projects</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="stat-number">200+</h3>
+                    <p class="stat-label">Stars</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="stat-number">30+</h3>
+                    <p class="stat-label">Collaborations</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects-section">
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-description">
+                    A collection of my open source contributions and personal projects
+                </p>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fab fa-react"></i>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link" title="View on GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="project-link" title="Live Demo">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">React Component Library</h3>
+                    <p class="project-description">
+                        A modern, accessible React component library with 50+ customizable components. Built with TypeScript and styled-components.
+                    </p>
+                    <div class="project-stats">
+                        <span class="stat-item">
+                            <i class="fas fa-star"></i> 145
+                        </span>
+                        <span class="stat-item">
+                            <i class="fas fa-code-branch"></i> 23
+                        </span>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">CSS</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fab fa-node-js"></i>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link" title="View on GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="project-link" title="Live Demo">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">API Framework</h3>
+                    <p class="project-description">
+                        Lightweight Node.js framework for building RESTful APIs. Features include authentication, validation, and MongoDB integration.
+                    </p>
+                    <div class="project-stats">
+                        <span class="stat-item">
+                            <i class="fas fa-star"></i> 89
+                        </span>
+                        <span class="stat-item">
+                            <i class="fas fa-code-branch"></i> 15
+                        </span>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Express</span>
+                        <span class="tag">MongoDB</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link" title="View on GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="project-link" title="Live Demo">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">ML Image Classifier</h3>
+                    <p class="project-description">
+                        Machine learning image classification tool using TensorFlow. Supports custom training and real-time predictions.
+                    </p>
+                    <div class="project-stats">
+                        <span class="stat-item">
+                            <i class="fas fa-star"></i> 67
+                        </span>
+                        <span class="stat-item">
+                            <i class="fas fa-code-branch"></i> 12
+                        </span>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">TensorFlow</span>
+                        <span class="tag">ML</span>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link" title="View on GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="project-link" title="Live Demo">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Design System</h3>
+                    <p class="project-description">
+                        Comprehensive design system with tokens, guidelines, and Figma plugin. Used by 100+ designers and developers.
+                    </p>
+                    <div class="project-stats">
+                        <span class="stat-item">
+                            <i class="fas fa-star"></i> 234
+                        </span>
+                        <span class="stat-item">
+                            <i class="fas fa-code-branch"></i> 45
+                        </span>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Design</span>
+                        <span class="tag">Figma</span>
+                        <span class="tag">CSS</span>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fab fa-vuejs"></i>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link" title="View on GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="project-link" title="Live Demo">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Vue Dashboard</h3>
+                    <p class="project-description">
+                        Fully responsive admin dashboard template built with Vue 3 and Composition API. Includes charts and data tables.
+                    </p>
+                    <div class="project-stats">
+                        <span class="stat-item">
+                            <i class="fas fa-star"></i> 156
+                        </span>
+                        <span class="stat-item">
+                            <i class="fas fa-code-branch"></i> 28
+                        </span>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">Vuex</span>
+                        <span class="tag">Chart.js</span>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link" title="View on GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="project-link" title="Live Demo">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">React Native Starter</h3>
+                    <p class="project-description">
+                        Production-ready React Native boilerplate with navigation, state management, and authentication pre-configured.
+                    </p>
+                    <div class="project-stats">
+                        <span class="stat-item">
+                            <i class="fas fa-star"></i> 98
+                        </span>
+                        <span class="stat-item">
+                            <i class="fas fa-code-branch"></i> 19
+                        </span>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">React Native</span>
+                        <span class="tag">Redux</span>
+                        <span class="tag">Mobile</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contributions Section -->
+        <section class="contributions-section">
+            <div class="section-header">
+                <h2 class="section-title">Recent Contributions</h2>
+                <p class="section-description">
+                    My latest contributions to open source projects
+                </p>
+            </div>
+
+            <div class="contributions-list">
+                <div class="contribution-item">
+                    <div class="contribution-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <div class="contribution-content">
+                        <h4 class="contribution-title">Added dark mode support</h4>
+                        <p class="contribution-project">react-admin-dashboard</p>
+                        <span class="contribution-date">2 days ago</span>
+                    </div>
+                    <div class="contribution-badge merged">Merged</div>
+                </div>
+
+                <div class="contribution-item">
+                    <div class="contribution-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <div class="contribution-content">
+                        <h4 class="contribution-title">Fixed memory leak in component</h4>
+                        <p class="contribution-project">vue-components</p>
+                        <span class="contribution-date">5 days ago</span>
+                    </div>
+                    <div class="contribution-badge merged">Merged</div>
+                </div>
+
+                <div class="contribution-item">
+                    <div class="contribution-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="contribution-content">
+                        <h4 class="contribution-title">Updated documentation</h4>
+                        <p class="contribution-project">nodejs-api-framework</p>
+                        <span class="contribution-date">1 week ago</span>
+                    </div>
+                    <div class="contribution-badge merged">Merged</div>
+                </div>
+
+                <div class="contribution-item">
+                    <div class="contribution-icon">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="contribution-content">
+                        <h4 class="contribution-title">Added TypeScript support</h4>
+                        <p class="contribution-project">express-middleware</p>
+                        <span class="contribution-date">2 weeks ago</span>
+                    </div>
+                    <div class="contribution-badge open">Open</div>
+                </div>
+
+                <div class="contribution-item">
+                    <div class="contribution-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <div class="contribution-content">
+                        <h4 class="contribution-title">Performance optimization</h4>
+                        <p class="contribution-project">webpack-config</p>
+                        <span class="contribution-date">3 weeks ago</span>
+                    </div>
+                    <div class="contribution-badge merged">Merged</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="opensource.js"></script>
+</body>
+</html>
